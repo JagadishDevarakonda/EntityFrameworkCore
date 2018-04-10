@@ -371,17 +371,17 @@ namespace Microsoft.EntityFrameworkCore.ChangeTracking
 
                 var collection = context.Entry(cherry).Collection(e => e.Monkeys);
 
-                Assert.False(collection.IsModified);
-
-                collection.IsModified = true;
-
-                Assert.False(collection.IsModified);
-                Assert.False(context.Entry(chunky1).Property(e => e.GarciaId).IsModified);
-                Assert.False(context.Entry(chunky2).Property(e => e.GarciaId).IsModified);
+                Assert.True(collection.IsModified);
 
                 collection.IsModified = false;
 
-                Assert.False(collection.IsModified);
+                Assert.True(collection.IsModified);
+                Assert.False(context.Entry(chunky1).Property(e => e.GarciaId).IsModified);
+                Assert.False(context.Entry(chunky2).Property(e => e.GarciaId).IsModified);
+
+                collection.IsModified = true;
+
+                Assert.True(collection.IsModified);
                 Assert.False(context.Entry(chunky1).Property(e => e.GarciaId).IsModified);
                 Assert.False(context.Entry(chunky2).Property(e => e.GarciaId).IsModified);
                 Assert.Equal(dependentState, context.Entry(chunky1).State);
